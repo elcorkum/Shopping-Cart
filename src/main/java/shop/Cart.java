@@ -14,11 +14,6 @@ public class Cart {
         return products;
     }
 
-    public void setProducts(Map<Product, Integer> products) {
-        this.products = products;
-    }
-
-
     public Cart(){
         this.products = new HashMap<>();
         printSpecial();
@@ -56,7 +51,7 @@ public class Cart {
                 System.out.println("TGIF! Clearance items staring at $.99");
                 break;
             case SATURDAY:
-                System.out.println("Snag our BOGO half-off deal. That's 50% of your second purchase!");
+                System.out.println("Snag our BOGO half-off deal. That's 50% of your second item!");
                 break;
         }
         System.out.println("-------------------------------------------------------");
@@ -69,18 +64,34 @@ public class Cart {
             double quantity = entry.getValue();
             subtotal += product.getPrice() * quantity;
         }
-        return subtotal;
+        return ((double) Math.round(subtotal * 100) / 100);
     }
 
     public double calculateTotalAfterTax(){
         double totalAfterTax = 0;
         double subtotal = calculateSubtotal();
         double totalTax = subtotal * this.TAX;
-        totalAfterTax = subtotal - totalTax;
-        return totalAfterTax;
+        totalAfterTax = subtotal + totalTax;
+        return ((double) Math.round(totalAfterTax * 100) / 100);
     }
 
     public void checkOut(){
-        //print invoice
+        StringBuilder receipt = new StringBuilder();
+        Date date = new Date();
+        SimpleDateFormat simpleDate = new SimpleDateFormat("EEEE, MMMM dd, y");
+        String todaysDate = simpleDate.format(date);
+        receipt.append("\n----------------------------------------------\n");
+        receipt.append("\t\t\tYour purchases today:\n\n");
+        for(Map.Entry<Product, Integer> entry: products.entrySet()){
+            Product product = entry.getKey();
+            double quantity = entry.getValue();
+            receipt.append(String.format("%s(Size %s)\t\tPrice %c%.2f\t\tQuantity %d\n",product.getProductName(), product.getSize(), '$', product.getPrice(), ((int)quantity)));
+        }
+        receipt.append(String.format("\n\t\t\tSubTotal\t %-10.2f", calculateSubtotal()))
+                .append(String.format("\n\t\t\tTotal Tax\t %-10.2f", calculateSubtotal() * this.TAX))
+                .append(String.format("\n\t\t\tTotal\t\t %-10.2f", calculateTotalAfterTax()))
+                .append(String.format("\n\n\t\t\t%s", todaysDate));
+        receipt.append("\n----------------------------------------------\n");
+        System.out.println(receipt);
     }
 }

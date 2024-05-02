@@ -13,6 +13,7 @@ public class Main {
         double subtotal = user.getCart().calculateSubtotal();
         System.out.println(subtotal);
         double total = user.getCart().calculateTotalAfterTax();
-        System.out.printf("%.2f", total);
+        System.out.println(total);
+        user.getCart().checkOut();
     }
 }
