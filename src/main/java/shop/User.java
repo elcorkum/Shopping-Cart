@@ -19,8 +19,12 @@ public class User {
         Map<Product, Integer> currentInventory = Product.inventory;
         int numberOfThisProductInStock = currentInventory.get(product);
         Map<Product, Integer> currentListOfProducts = cart.getProducts();
-        if (numberOfThisProductInStock - quantity > 0){
-            currentListOfProducts.put(product, quantity);
+        if (numberOfThisProductInStock - quantity >= 0){
+            if(currentListOfProducts.containsKey(product)){
+                currentListOfProducts.put(product, currentListOfProducts.get(product) + quantity);
+            } else {
+                currentListOfProducts.put(product, quantity);
+            }
             numberOfThisProductInStock -= quantity;
             Product.inventory.put(product, numberOfThisProductInStock);
         } else {

@@ -14,6 +14,10 @@ public class Cart {
         return products;
     }
 
+    public float getTAX() {
+        return TAX;
+    }
+
     public Cart(){
         this.products = new HashMap<>();
         printSpecial();
@@ -54,7 +58,7 @@ public class Cart {
                 System.out.println("Snag our BOGO half-off deal. That's 50% of your second item!");
                 break;
         }
-        System.out.println("-------------------------------------------------------");
+        System.out.println("--------------------------------------------------");
     }
 
     public double calculateSubtotal(){
@@ -70,9 +74,9 @@ public class Cart {
     public double calculateTotalAfterTax(){
         double totalAfterTax = 0;
         double subtotal = calculateSubtotal();
-        double totalTax = subtotal * this.TAX;
+        double totalTax = subtotal * TAX;
         totalAfterTax = subtotal + totalTax;
-        return ((double) Math.round(totalAfterTax * 100) / 100);
+        return (double) Math.round(totalAfterTax * 100) / 100;
     }
 
     public void checkOut(){
@@ -93,5 +97,22 @@ public class Cart {
                 .append(String.format("\n\n\t\t\t%s", todaysDate));
         receipt.append("\n----------------------------------------------\n");
         System.out.println(receipt);
+    }
+
+    public int cartQuantity(){
+        int totalNumberOfItems = 0;
+        for(Map.Entry<Product, Integer> entry: products.entrySet()){
+            int quantity = entry.getValue();
+            totalNumberOfItems += quantity;
+        }
+        return totalNumberOfItems;
+    }
+
+    public void checkReturnPolicy(Product product){
+        if(product instanceof Wearable){
+            ((Wearable) product).isWearable();
+        } else if(product instanceof Perishable){
+            ((Perishable) product).isPerishable();
+        }
     }
 }
