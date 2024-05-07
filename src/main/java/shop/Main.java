@@ -21,7 +21,6 @@ public class Main {
        double total = user.getCart().calculateTotalAfterTax();
        System.out.println(total);
        user.getCart().checkOut();
-       user.getCart().checkReturnPolicy(soda1);
 
        user.getCart().checkReturnPolicy(soda1);
        System.out.println(user.getCart().cartQuantity());

@@ -1,5 +1,7 @@
 package shop;
 
+@FunctionalInterface
+
 public interface Wearable {
-    public boolean isWearable();
+    boolean isWearable();
 }

@@ -16,7 +16,7 @@ public class User {
     }
 
     public void addToCart(Product product, int quantity){
-        Map<Product, Integer> currentInventory = Product.inventory;
+        Map<Product, Integer> currentInventory = product.getInventory();
         int numberOfThisProductInStock = currentInventory.get(product);
         Map<Product, Integer> currentListOfProducts = cart.getProducts();
         if (numberOfThisProductInStock - quantity >= 0){
@@ -26,14 +26,14 @@ public class User {
                 currentListOfProducts.put(product, quantity);
             }
             numberOfThisProductInStock -= quantity;
-            Product.inventory.put(product, numberOfThisProductInStock);
+            product.getInventory().put(product, numberOfThisProductInStock);
         } else {
             System.out.println("This product is currently low in inventory or out of stock\nPlease enter a lower quantity or pick a different item");
             System.out.println("-------------------------------------------------------");
         }
     }
     public void removeFromCart(Product product, Integer quantity){
-        Map<Product, Integer> currentInventory = Product.inventory;
+        Map<Product, Integer> currentInventory = product.getInventory();
         int numberOfThisProductInStock = currentInventory.get(product);
         Map<Product, Integer> currentListOfProducts = cart.getProducts();
 
@@ -43,7 +43,7 @@ public class User {
             }else if(currentListOfProducts.get(product) - quantity > 0){
                 currentListOfProducts.put(product, currentListOfProducts.get(product) - quantity);
             }
-            Product.inventory.put(product, numberOfThisProductInStock + quantity);
+            product.getInventory().put(product, numberOfThisProductInStock + quantity);
         }
         catch(Exception e){
             System.out.println(product.getProductName() + " Size(" + product.getSize() + ") is not in the cart. Add to cart first");

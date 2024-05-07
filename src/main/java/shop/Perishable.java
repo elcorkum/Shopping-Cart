@@ -1,5 +1,7 @@
 package shop;
 
+@FunctionalInterface
+
 public interface Perishable {
-    public boolean isPerishable();
+    boolean isPerishable();
 }

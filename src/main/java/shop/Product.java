@@ -10,7 +10,11 @@ public abstract class Product{
     private String productName;
     private Size size;
     private  double price;
-    public static Map<Product, Integer> inventory = new HashMap<>();
+    private Map<Product, Integer> inventory = new HashMap<>();
+
+    public Map<Product, Integer> getInventory() {
+        return inventory;
+    }
 
     public String getProductName() {
         return productName;
@@ -22,6 +26,12 @@ public abstract class Product{
 
     public double getPrice() {
         return price;
+    }
+
+    public void setPrice(double price) {
+        if (price > 0){
+            this.price = price;
+        }
     }
 
     public Product(String productName, Size size, double price){
